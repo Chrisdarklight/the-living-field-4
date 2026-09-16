@@ -33,8 +33,16 @@
   .basket-row-qty input { width:52px; text-align:center; padding:0.4em; }
   .basket-row-remove { background:none; border:none; color:var(--charcoal-alt); text-decoration:underline; cursor:pointer; font-size:0.85rem; padding:0; }
   .basket-empty { text-align:center; padding:2.5em 0; color:var(--charcoal-alt); }
-  .basket-summary { display:flex; justify-content:space-between; align-items:baseline; padding-top:1em; margin-top:0.5em; border-top:2px solid var(--charcoal, #3a382f); }
-  .basket-summary strong { font-family:var(--font-serif, 'Cormorant Garamond', serif); font-size:1.4rem; }
+  .basket-line { display:flex; justify-content:space-between; align-items:baseline; padding:0.35em 0; font-size:0.95rem; color:var(--charcoal-alt); font-family:'Work Sans', sans-serif; }
+  .basket-line-total {
+    padding-top:0.8em;
+    margin-top:0.5em;
+    border-top:2px solid var(--charcoal, #3a382f);
+    font-size:1.05rem;
+    color:var(--ink, #2b2a25);
+  }
+  .basket-line-total strong { font-family:'Work Sans', sans-serif; font-weight:600; font-size:1.35rem; letter-spacing:0.01em; }
+  .basket-note { margin:0.8em 0 0; color:var(--charcoal-alt); font-size:0.82rem; }
   #basket-error { color:#a33; margin-top:1em; display:none; }
 </style>
 </head>
@@ -55,9 +63,8 @@
       <a href="../shop/training/">Training</a>
       <a href="../faq/">FAQ</a>
       <a href="../contact/">Contact</a>
-      <a href="../basket/" class="nav-basket" aria-current="page">Basket <span data-cart-count class="cart-count" hidden>0</span></a>
     </nav>
-    <button class="nav-toggle" aria-label="Open menu">☰</button>
+    <div class="header-actions"><a href="../basket/" class="nav-basket-icon" aria-current="page" aria-label="Basket"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1.4 11.2A1.6 1.6 0 0 1 17 20.5H7a1.6 1.6 0 0 1-1.6-1.3L4 8Z"/><path d="M8 8V6.2a4 4 0 0 1 8 0V8"/></svg><span data-cart-count class="cart-count" hidden>0</span></a><button class="nav-toggle" aria-label="Open menu">☰</button></div>
   </div>
 </header>
 
@@ -78,11 +85,19 @@
     <div id="basket-list"></div>
 
     <div id="basket-summary" hidden>
-      <div class="basket-summary">
-        <span>Total</span>
+      <div class="basket-line">
+        <span>Subtotal</span>
+        <span id="basket-subtotal"></span>
+      </div>
+      <div class="basket-line">
+        <span>VAT (20%)</span>
+        <span id="basket-vat"></span>
+      </div>
+      <div class="basket-line basket-line-total">
+        <span>Estimated total</span>
         <strong id="basket-total"></strong>
       </div>
-      <p style="margin:0.6em 0 0; color:var(--charcoal-alt); font-size:0.82rem;">Shipping and any applicable tax are calculated at checkout. By ordering, you agree to our <a href="../legal/disclaimer.html">disclaimer</a>.</p>
+      <p class="basket-note">Shipping (free over £100, otherwise £7.50) is added on the next page, so your final total there may differ slightly. By ordering, you agree to our <a href="../legal/disclaimer.html">disclaimer</a>.</p>
       <button id="basket-checkout" type="button" class="btn btn-solid" style="margin-top:1.2em; width:100%;">Checkout securely with Stripe →</button>
       <p id="basket-error"></p>
     </div>
@@ -129,13 +144,27 @@
   var listEl = document.getElementById('basket-list');
   var emptyEl = document.getElementById('basket-empty');
   var summaryEl = document.getElementById('basket-summary');
+  var subtotalEl = document.getElementById('basket-subtotal');
+  var vatEl = document.getElementById('basket-vat');
   var totalEl = document.getElementById('basket-total');
   var errorEl = document.getElementById('basket-error');
   var checkoutBtn = document.getElementById('basket-checkout');
 
+  // Keep in sync with the UK VAT tax rate applied server-side in
+  // netlify/functions/create-checkout-session.js (txr_1UGLAtKv2SRkvpcudHprgVYw,
+  // 20%, exclusive). This is shown here purely so the customer sees a VAT
+  // breakdown before they leave the site -- Stripe still calculates the
+  // authoritative, final figure (line item by line item) at checkout, so on
+  // multi-item orders the two can differ by a penny or two from rounding.
+  var VAT_RATE = 0.20;
+
   function parsePrice(str) {
     var n = parseFloat(String(str || '0').replace(/[^0-9.]/g, ''));
     return isNaN(n) ? 0 : n;
+  }
+
+  function formatGBP(n) {
+    return '£' + n.toFixed(2);
   }
 
   function render() {
@@ -204,7 +233,10 @@
       listEl.appendChild(row);
     });
 
-    totalEl.textContent = '£' + total.toFixed(2);
+    var vat = total * VAT_RATE;
+    subtotalEl.textContent = formatGBP(total);
+    vatEl.textContent = formatGBP(vat);
+    totalEl.textContent = formatGBP(total + vat);
   }
 
   document.addEventListener('tlf-cart-change', render);

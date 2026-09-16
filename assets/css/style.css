@@ -181,8 +181,27 @@ section[id] { scroll-margin-top: 90px; }
 .main-nav a:hover { color: var(--gold); }
 .nav-icons { display: flex; align-items: center; gap: 20px; font-size: 0.85rem; }
 
-/* ---------- Basket link + count badge (nav) ---------- */
-.nav-basket { display: inline-flex; align-items: center; gap: 6px; }
+/* ---------- Header actions: basket icon (always in the top-right corner,
+   on both desktop and mobile) + the mobile menu button ---------- */
+.header-actions { display: flex; align-items: center; gap: 18px; }
+
+.nav-basket-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--charcoal-alt);
+}
+.nav-basket-icon:hover { color: var(--gold); }
+.nav-basket-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .cart-count {
   display: inline-flex;
   align-items: center;
@@ -191,7 +210,7 @@ section[id] { scroll-margin-top: 90px; }
   height: 15px;
   padding: 0 4px;
   border-radius: 999px;
-  background: transparent;
+  background: var(--cream);
   border: 1px solid var(--gold);
   color: var(--gold);
   font-size: 0.65rem;
@@ -199,6 +218,14 @@ section[id] { scroll-margin-top: 90px; }
   letter-spacing: 0;
   text-transform: none;
   line-height: 1;
+}
+/* On the icon (nav-basket-icon), the badge sits pinned to its top-right
+   corner rather than inline, since there's no longer a "Basket" word next
+   to it for the count to sit beside. */
+.nav-basket-icon .cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
 }
 .cart-count[hidden] { display: none; }
 
