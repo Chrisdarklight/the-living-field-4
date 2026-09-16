@@ -1,0 +1,860 @@
+/* =========================================================
+   THE LIVING FIELD — shared design system
+   Palette + type inspired by an editorial, ancestral-wisdom
+   aesthetic: moody nature photography, olive/gold accents,
+   cream and charcoal grounds, elegant serif + clean sans.
+   ========================================================= */
+
+:root {
+  /* Colour system — softened: warmer greys instead of near-black,
+     muted sandy gold and sage olive instead of saturated tones. */
+  --cream:        #FAF7F0;
+  --cream-alt:    #F1ECE0;
+  --charcoal:     #3A382F;   /* soft warm dark grey, used for footer */
+  --charcoal-soft:#5C5946;   /* lighter, sleeker dark tone for mid-page dark sections */
+  --ink:          #4A473C;   /* body text — softer than pure charcoal */
+  --charcoal-alt: #6B6858;   /* secondary/muted text */
+  --olive:        #918F63;
+  --olive-dark:   #767450;
+  --gold:         #BFA06B;
+  --gold-light:   #DCC896;
+  --white:        #FFFFFF;
+  --line:         rgba(58, 56, 47, 0.10);
+  --line-on-dark: rgba(250, 247, 240, 0.16);
+
+  /* Type */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --container: 1180px;
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 17px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* needed for the .full-bleed image trick below — 100vw
+    can be a hair wider than the viewport once a scrollbar is present, which
+    would otherwise leave the page able to scroll a few px sideways */
+}
+
+/* Break an element out of its centered .container to span the full browser
+   width, regardless of how deep it sits inside nested containers. */
+.full-bleed {
+  width: 100vw;
+  max-width: 100vw; /* overrides the global img{max-width:100%} rule, which
+    would otherwise clamp this back down to its parent .container's width */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  display: block;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+  color: var(--ink);
+}
+
+h1 { font-size: clamp(2.3rem, 4.6vw, 3.7rem); font-weight: 500; }
+h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
+h3 { font-size: clamp(1.25rem, 2.1vw, 1.5rem); }
+
+p { margin: 0 0 1.2em; color: var(--ink); }
+
+a { color: var(--olive-dark); text-decoration: none; }
+a:hover { color: var(--gold); }
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: 0.9em;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+/* Wider variant for image-led product grids that want more room for 3-across
+   large square cards than the site's standard 1180px text container gives —
+   scoped to specific sections via an added class; the default .container
+   (header, hero, section-head text, every other page) is unaffected. */
+.container.container-wide {
+  max-width: 1680px;
+}
+
+img { max-width: 100%; display: block; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.94rem;
+  letter-spacing: 0.01em;
+  padding: 0.8em 1.8em;
+  border-radius: 999px;
+  border: 1.5px solid var(--gold);
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.btn:hover { background: var(--gold); border-color: var(--gold); color: var(--white); }
+
+.btn-solid {
+  background: var(--olive-dark);
+  border-color: var(--olive-dark);
+  color: var(--cream);
+}
+.btn-solid:hover { background: var(--charcoal); border-color: var(--charcoal); color: var(--cream); }
+
+.btn-on-dark {
+  border-color: var(--gold-light);
+  color: var(--cream);
+}
+.btn-on-dark:hover { background: var(--gold-light); color: var(--charcoal); }
+
+/* ---------- Header / Nav ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+}
+section[id] { scroll-margin-top: 90px; }
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  position: relative;
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  font-weight: 500;
+}
+.logo .logo-field { color: var(--olive); }
+.logo-with-mark { display: inline-flex; align-items: center; gap: 9px; }
+.logo-mark {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: var(--olive-dark);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.main-nav { display: flex; align-items: center; gap: 34px; }
+.main-nav a {
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  color: var(--charcoal-alt);
+}
+.main-nav a:hover { color: var(--gold); }
+.nav-icons { display: flex; align-items: center; gap: 20px; font-size: 0.85rem; }
+
+/* ---------- Basket link + count badge (nav) ---------- */
+.nav-basket { display: inline-flex; align-items: center; gap: 6px; }
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1;
+}
+.cart-count[hidden] { display: none; }
+
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+
+/* ---------- Shop dropdown ---------- */
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { display: inline-flex; align-items: center; gap: 4px; }
+.nav-caret { font-size: 0.65em; position: relative; top: 1px; transition: transform 0.15s ease; }
+.nav-dropdown:hover .nav-caret, .nav-dropdown:focus-within .nav-caret { transform: rotate(180deg); }
+
+.nav-dropdown-menu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 210px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 32px rgba(58, 56, 47, 0.14);
+  padding: 8px 0;
+  margin-top: 14px;
+  z-index: 60;
+}
+/* Invisible bridge over the gap above the menu, so the cursor moving from
+   "Shop" down into the dropdown never leaves a hoverable area and the
+   menu doesn't disappear mid-move. */
+.nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 14px;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  display: flex;
+}
+.nav-dropdown-menu a {
+  padding: 9px 20px;
+  font-size: 0.82rem;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  color: var(--ink);
+}
+.nav-dropdown-menu a:hover { color: var(--gold); background: var(--cream-alt); }
+
+@media (max-width: 860px) {
+  .main-nav { display: none; }
+  .nav-toggle { display: block; }
+
+  .main-nav.nav-open {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--cream);
+    padding: 18px 28px 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  .main-nav.nav-open a { padding: 6px 0; }
+  .nav-dropdown { width: 100%; }
+  .nav-caret { display: none; }
+  .nav-dropdown-menu {
+    display: flex !important;
+    position: static;
+    box-shadow: none;
+    border: none;
+    background: none;
+    padding: 2px 0 2px 16px;
+    margin-top: 2px;
+  }
+  .nav-dropdown-menu a { padding: 5px 0; font-size: 0.8rem; color: var(--charcoal-alt); }
+}
+
+/* ---------- Placeholder gradient grounds (swap for real photography) ----------
+   Softer, lower-contrast washes — a gentle stand-in rather than a bold
+   graphic block, so the page still feels calm before real photos land. */
+.grad-1 { background-image: linear-gradient(135deg, #6B6950 0%, #948F68 55%, #C4AD80 100%); }
+.grad-2 { background-image: linear-gradient(135deg, #4A483C 0%, #7B7859 100%); }
+.grad-3 { background-image: linear-gradient(135deg, #6E6B4F 0%, #45432D 100%); }
+.grad-4 { background-image: linear-gradient(135deg, #8B8763 0%, #44412F 100%); }
+.grad-5 { background-image: linear-gradient(135deg, #C4AD80 0%, #59563D 100%); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  background-position: center;
+  color: var(--cream);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(58,56,47,0.08) 0%, rgba(58,56,47,0.62) 100%);
+}
+/* A lighter, more photographic overlay — text stays subtle rather than
+   sitting on a heavy scrim. Best for hero images with their own contrast
+   (like a sky/landscape shot) rather than flat placeholder gradients. */
+.hero-subtle { min-height: 92vh; }
+.hero-subtle::before {
+  background: linear-gradient(180deg, rgba(36,35,30,0.05) 0%, rgba(36,35,30,0.15) 55%, rgba(36,35,30,0.58) 100%);
+}
+.hero-subtle .eyebrow { color: var(--gold-light); text-shadow: 0 1px 6px rgba(0,0,0,0.35); }
+.hero-subtle h1 { text-shadow: 0 2px 14px rgba(0,0,0,0.35); }
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 60px 28px 70px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+.hero h1 { color: var(--white); }
+.hero p.lede { font-size: 1.15rem; color: var(--cream-alt); max-width: 560px; margin: 0 auto 2em; }
+
+/* ---------- Mission statement (poetic lede, sits under the hero) ---------- */
+.mission-statement {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.85rem;
+  line-height: 1.55;
+  color: var(--ink);
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+@media (max-width: 640px) {
+  .mission-statement { font-size: 1.4rem; }
+}
+
+/* ---------- Sections ---------- */
+section { padding: 90px 0; }
+.section-alt { background: var(--cream-alt); }
+.section-dark { background: var(--charcoal-soft); color: var(--cream); }
+.section-dark h2, .section-dark h3 { color: var(--cream); }
+.section-dark .eyebrow { color: var(--gold-light); }
+.section-dark p { color: var(--cream-alt); }
+
+.section-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 56px;
+}
+
+/* ---------- Cards / grids ---------- */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+@media (max-width: 860px) {
+  .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* Horizontal 3-up scroller for a product-card row that can hold more than 3
+   items (e.g. a 4-item "related products" list) — reuses the existing
+   .card component as-is (unlike the homepage's separate .scroller/
+   .scroll-card component, so it stays visually identical to every other
+   product-card row on the site) but lays the cards out in a single
+   horizontally-scrollable line instead of wrapping a 4th card onto its own
+   row. With exactly 3 cards it fits with nothing to scroll; a 4th (or more)
+   naturally overflows into a native, swipeable/scrollable row. */
+.card-scroller {
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 28px;
+  padding-bottom: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--olive) transparent;
+}
+.card-scroller::-webkit-scrollbar { height: 7px; }
+.card-scroller::-webkit-scrollbar-track { background: transparent; }
+.card-scroller::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
+.card-scroller::-webkit-scrollbar-thumb:hover { background: var(--olive); }
+.card-scroller > .card {
+  flex: 0 0 calc((100% - 64px) / 3);
+  scroll-snap-align: start;
+}
+@media (max-width: 860px) {
+  .card-scroller > .card { flex: 0 0 82%; }
+}
+
+.tile {
+  position: relative;
+  aspect-ratio: 4/5;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.tile::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(58,56,47,0) 40%, rgba(58,56,47,0.72) 100%);
+}
+.tile-content { position: relative; z-index: 1; padding: 28px; color: var(--cream); }
+.tile-content .eyebrow { color: var(--gold-light); margin-bottom: 0.4em; }
+.tile-content h3 { color: var(--white); margin-bottom: 0.2em; }
+.tile-content p { color: var(--cream-alt); font-size: 0.92rem; margin: 0; }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.card h3 { margin-bottom: 0.4em; }
+/* Whole-card click target: used only on cards that link to a real product
+   page (not the mailto "coming soon" cards). .card-link-overlay is an
+   invisible full-card <a> placed as the card's first child; .card > .btn
+   below gets position:relative + a higher z-index so the visible button
+   keeps working as its own normal link, sitting above the overlay. */
+.card-clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-clickable:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 34px rgba(58,56,47,0.22);
+  border-color: var(--gold);
+}
+.card-clickable:active { transform: translateY(-2px); }
+.card-link-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.card .price {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--olive-dark);
+  margin: 0.4em 0 1em;
+}
+/* Push each card's button to the bottom so buttons line up across a row,
+   regardless of how much title/description text sits above them. Only
+   applies to a .btn that is a direct flex child of .card — a .btn nested
+   inside a custom inline-styled wrapper (e.g. a horizontal .card override)
+   is unaffected. align-self:flex-start on both the tag and the button
+   keeps them their natural pill width instead of being stretched full-width
+   by the column flex layout (block-level children like p/h3 are unaffected
+   either way, since they're already full-width in normal flow). */
+.card > .btn { margin-top: auto; align-self: flex-start; position: relative; z-index: 2; }
+.card > .tag { align-self: flex-start; }
+
+/* ---------- Horizontal scroller (mobile-style swipe, works with a mouse too) ---------- */
+.scroller {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 28px;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 18px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--olive) transparent;
+}
+/* .scroller shares the .container class for its max-width/centering, but a
+   scroll-snap container resolves its resting scroll position against the
+   snap targets (each card's own edge), not against any padding on the
+   scroller or its track — so a plain left/right padding gets silently
+   "scrolled past" on load, leaving the first card flush against the screen
+   edge instead of lined up with the rest of the page. Cancel .container's
+   padding here, give the actual visual gap as margin on the first/last card,
+   and tell the snap machinery about that gap via scroll-padding above so it
+   settles on the card's true resting position instead of skipping past it. */
+.scroller.container { padding-left: 0; padding-right: 0; }
+.scroller::-webkit-scrollbar { height: 7px; }
+.scroller::-webkit-scrollbar-track { background: transparent; }
+.scroller::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
+.scroller::-webkit-scrollbar-thumb:hover { background: var(--olive); }
+
+.scroller-track {
+  display: flex;
+  gap: 24px;
+}
+.scroller-track .scroll-card:first-child { margin-left: 28px; }
+.scroller-track .scroll-card:last-child { margin-right: 28px; }
+.scroll-card {
+  flex: 0 0 400px;
+  scroll-snap-align: start;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+/* Whole-card click target, same pattern as .card-clickable/.card-link-overlay:
+   .card-link-overlay is an invisible full-card <a> placed as the scroll-card's
+   first child; the visible "Shop X" link keeps working as its own link by
+   sitting above the overlay via position:relative + a higher z-index. */
+.scroll-card-body a { position: relative; z-index: 2; }
+@media (max-width: 600px) {
+  .scroll-card { flex-basis: 86vw; }
+}
+/* Above mobile, there are exactly three cards in every row on this site —
+   rather than a fixed 400px card width that forces a horizontal scroll on
+   anything narrower than ~1300px, lay them out as three equal columns that
+   shrink to fit the container, so a normal desktop window shows all three
+   at once with nothing to scroll. The scroll-affordance JS (main.js) already
+   hides the fade/dots automatically once a row has no overflow. Mobile keeps
+   the swipeable single-card-at-a-time behaviour above (three columns would
+   be too narrow to read there). */
+@media (min-width: 601px) {
+  .scroller { overflow-x: visible; scroll-snap-type: none; }
+  .scroller.container { padding-left: 28px; padding-right: 28px; }
+  .scroller-track { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .scroller-track .scroll-card:first-child,
+  .scroller-track .scroll-card:last-child { margin-left: 0; margin-right: 0; }
+}
+.scroll-card-img {
+  position: relative;
+  aspect-ratio: 1/1;
+  background-size: cover;
+  background-position: center;
+}
+/* Variant for cards showing a logo/wordmark rather than a photo — a plain
+   background-image with "cover" would either crop a logo's whitespace
+   oddly or, with "contain", leave it at its small native size instead of
+   filling the tile. This puts the logo in an actual <img> so object-fit:
+   contain can scale it up (not just down) to fill the available space
+   evenly. The img is taken out of normal flow with position:absolute so it
+   can never influence .scroll-card-img's own size — left in normal flow, a
+   tall/portrait logo's intrinsic height fights the inherited aspect-ratio:
+   1/1 box and stretches it taller, which is why the three tiles ended up
+   different heights (and so different shapes) instead of matching squares. */
+.scroll-card-logo {
+  background: var(--cream);
+}
+.scroll-card-logo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  object-fit: contain;
+}
+.scroll-card-body { padding: 26px; display: flex; flex-direction: column; flex: 1; }
+.scroll-card-body h3 { margin-bottom: 0.4em; }
+.scroll-card-body a { margin-top: auto; padding-top: 14px; }
+
+/* Scroll affordance — the card row is a horizontal scroller, but with nothing
+   on screen to suggest that, a partially-visible last card just reads as a
+   layout bug ("it's cut off") rather than an invitation to swipe/drag. A
+   right-edge fade hints there's more to see, and hides itself once you've
+   scrolled to the end; the dots below give an explicit count + position and
+   double as click targets. JS (main.js) builds both from any .scroller found
+   on the page, so no markup changes are needed per instance. */
+.scroller-wrap { position: relative; }
+.scroller-fade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 18px;
+  width: 64px;
+  background: linear-gradient(to right, rgba(250,247,240,0), var(--cream));
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.scroller-fade.is-hidden { opacity: 0; }
+.scroller-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  margin-top: 6px;
+}
+.scroller-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--line);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.scroller-dots button:hover { background: var(--olive); }
+.scroller-dots button.active { background: var(--olive); transform: scale(1.25); }
+
+/* ---------- Embedded video (YouTube training/preview clips) ---------- */
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--charcoal);
+  margin: 1.4em 0;
+}
+.video-embed iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- Product / article layout ---------- */
+.pd-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+@media (max-width: 860px) { .pd-layout { grid-template-columns: 1fr; } }
+/* Wider image column, used where a product benefits from a bigger hero shot
+   (e.g. the CW1+ page) without changing the default ratio everywhere. */
+.pd-layout--wide-image { grid-template-columns: 1.6fr 1fr; }
+@media (max-width: 860px) { .pd-layout--wide-image { grid-template-columns: 1fr; } }
+
+/* Product title emphasis + condensed lede text, used to keep the right-hand
+   column short next to a tall product image. */
+.pd-title { font-weight: 700; }
+.pd-lede { font-size: 0.92rem; color: var(--charcoal-alt); }
+
+/* "Read more" — collapses the deeper spec/construction detail so the page
+   doesn't force a long scroll just to see the buy button and a summary.
+   Plain <details>/<summary>, no JS needed. Reusable on any product page. */
+.pd-more { margin: 0.4em 0 1.4em; }
+.pd-more > summary {
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--olive-dark);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.pd-more > summary::-webkit-details-marker,
+.pd-more > summary::marker { display: none; content: ''; }
+.pd-more > summary .pd-more-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.pd-more[open] > summary .pd-more-arrow { transform: rotate(90deg); }
+.pd-more > summary .pd-more-label-open { display: none; }
+.pd-more[open] > summary .pd-more-label-closed { display: none; }
+.pd-more[open] > summary .pd-more-label-open { display: inline; }
+.pd-more-body { margin-top: 1em; }
+
+/* Product-page hero image: click (or Enter/Space) to open a full-size
+   lightbox view. Applied via the .pd-image-zoom class on the .tile div;
+   the zoom-in cursor and corner icon are the only visual hint needed. */
+.pd-image-zoom { cursor: zoom-in; }
+.pd-image-zoom-icon {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(58,56,47,0.68);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  pointer-events: none;
+}
+.pd-image-zoom-icon svg { width: 18px; height: 18px; }
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(30,28,22,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.lightbox-overlay.is-open { opacity: 1; pointer-events: auto; }
+.lightbox-overlay img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(250,247,240,0.12);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.lightbox-close:hover { background: rgba(250,247,240,0.22); }
+
+.breadcrumb {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  color: var(--charcoal-alt);
+  margin-bottom: 28px;
+}
+.breadcrumb a { color: var(--olive-dark); }
+
+.spec-table { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
+.spec-table td { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+.spec-table td:first-child { color: var(--charcoal-alt); width: 42%; }
+
+/* ---------- FAQ accordion ---------- */
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-q {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 22px 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--charcoal);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.faq-q .icon { font-size: 1.3rem; color: var(--gold); transition: transform 0.2s ease; }
+.faq-item.open .icon { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+.faq-item.open .faq-a { max-height: 600px; }
+.faq-a p { padding-bottom: 22px; color: var(--charcoal-alt); }
+
+/* ---------- Forms ---------- */
+.field { margin-bottom: 22px; }
+.field label { display: block; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; color: var(--charcoal-alt); }
+.field input, .field textarea, .field select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+}
+.field textarea { min-height: 140px; resize: vertical; }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--charcoal); color: var(--cream-alt); padding-top: 70px; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid var(--line-on-dark);
+}
+@media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.footer-grid h4 {
+  color: var(--gold-light);
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 500;
+  font-size: 0.8rem;
+  margin-bottom: 1.2em;
+}
+.footer-grid a { color: var(--cream-alt); display: block; margin-bottom: 0.7em; font-size: 0.92rem; }
+.footer-grid a:hover { color: var(--gold-light); }
+.footer-legal {
+  padding: 26px 0 40px;
+  font-size: 0.78rem;
+  color: rgba(247,243,233,0.55);
+  line-height: 1.7;
+}
+.footer-legal a { color: rgba(247,243,233,0.7); }
+.rebuild-notice { font-size: 0.88rem; color: var(--gold-light); margin-bottom: 10px; }
+.rebuild-notice a { color: var(--gold-light); text-decoration: underline; }
+
+/* ---------- Placeholder photography labels ----------
+   Every .hero / .tile carries a data-ph attribute describing the
+   real photo to shoot/source later. Remove data-ph once a real
+   background-image is set and this label disappears automatically. */
+.hero[data-ph]::after, .tile[data-ph]::after {
+  content: "\1F4F7  placeholder — " attr(data-ph);
+  position: absolute;
+  top: 14px; left: 14px;
+  z-index: 2;
+  background: rgba(58,56,47,0.55);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  border-radius: 999px;
+  padding: 5px 12px;
+  max-width: calc(100% - 28px);
+}
+
+/* ---------- Utility ---------- */
+.mt-0 { margin-top: 0; }
+.text-center { text-align: center; }
+.tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 500;
+  color: var(--olive-dark);
+  background: var(--cream-alt);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+.tag-soon {
+  display: inline-block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--charcoal);
+  background: var(--gold-light);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+.tile-content .tag-soon { background: rgba(250, 247, 240, 0.9); }

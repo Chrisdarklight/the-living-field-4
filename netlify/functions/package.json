@@ -1,0 +1,9 @@
+{
+  "name": "thelivingfield-functions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Netlify Functions for The Living Field (Stripe Checkout basket).",
+  "dependencies": {
+    "stripe": "^16.0.0"
+  }
+}

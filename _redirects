@@ -1,0 +1,6 @@
+# Permanent redirects — old "Body" section URLs to the renamed "Alchemical
+# Formulations" section. Keeps any existing bookmarks, social shares or
+# search-engine links working after the /body/ -> /alchemical-formulations/
+# folder rename (2026-09-15).
+/body   /alchemical-formulations/   301
+/body/*  /alchemical-formulations/:splat  301

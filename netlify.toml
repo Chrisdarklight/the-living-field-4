@@ -1,0 +1,5 @@
+[build]
+  functions = "netlify/functions"
+
+# Redirects for old URLs (renamed /body/ -> /alchemical-formulations/) live in
+# the _redirects file at the site root -- Netlify reads both files together.
