@@ -21,6 +21,27 @@
 // left out of this first version. In the meantime the disclaimer link is
 // already shown on the basket page itself before the customer checks out.
 
+// UK VAT tax rate object, created once in the Stripe Dashboard (Settings ->
+// Tax -> Tax rates: 20%, exclusive -- added on top of the price shown on the
+// site, not included in it). Applied to every line item below so customers
+// always pay the listed price plus VAT, matching how prices are shown
+// site-wide. If this ever needs to change (a different rate, or per-product
+// rates), update it here -- it's the one place tax is applied.
+const UK_VAT_TAX_RATE_ID = 'txr_1UGLAtKv2SRkvpcudHprgVYw';
+
+// Shipping: free once the order subtotal (goods only, before VAT) reaches
+// £100, otherwise a flat £7.50 -- both amounts in pence, per CJ. The
+// subtotal used for this decision is calculated below from Stripe's own
+// Price records (looked up server-side), never from anything the browser
+// sends, so it can't be spoofed by editing basket data client-side.
+// NOTE: VAT is not currently applied to the shipping charge itself -- CJ is
+// checking with her accountant whether it should be (UK delivery-charge VAT
+// treatment usually follows the goods, but isn't assumed here rather than
+// risk getting it wrong). Add `tax_rates`/tax_behavior to the shipping rate
+// below once that's confirmed.
+const FREE_SHIPPING_THRESHOLD_PENCE = 10000; // £100.00
+const STANDARD_SHIPPING_PENCE = 750; // £7.50
+
 const Stripe = require('stripe');
 
 exports.handler = async function (event) {
@@ -55,7 +76,8 @@ exports.handler = async function (event) {
     .filter((item) => item && item.priceId)
     .map((item) => ({
       price: String(item.priceId),
-      quantity: Math.max(1, Math.min(99, parseInt(item.quantity, 10) || 1))
+      quantity: Math.max(1, Math.min(99, parseInt(item.quantity, 10) || 1)),
+      tax_rates: [UK_VAT_TAX_RATE_ID]
     }));
 
   if (line_items.length === 0) {
@@ -65,10 +87,38 @@ exports.handler = async function (event) {
   const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || 'https://www.thelivingfield.co.uk';
 
   try {
+    // Look up each item's real price directly from Stripe (trusted source)
+    // to work out the order subtotal, purely to decide which shipping
+    // option to offer -- this never affects what the customer is actually
+    // charged for the goods themselves, which Stripe calculates independently
+    // from the same price IDs when the session is created below.
+    let subtotalPence = 0;
+    for (const li of line_items) {
+      const priceObj = await stripe.prices.retrieve(li.price);
+      if (typeof priceObj.unit_amount === 'number') {
+        subtotalPence += priceObj.unit_amount * li.quantity;
+      }
+    }
+
+    const freeShipping = subtotalPence >= FREE_SHIPPING_THRESHOLD_PENCE;
+    const shipping_options = [
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: {
+            amount: freeShipping ? 0 : STANDARD_SHIPPING_PENCE,
+            currency: 'gbp'
+          },
+          display_name: freeShipping ? 'Free UK shipping' : 'UK shipping'
+        }
+      }
+    ];
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items,
       shipping_address_collection: { allowed_countries: ['GB'] },
+      shipping_options,
       success_url: origin + '/basket/thank-you/',
       cancel_url: origin + '/basket/'
     });
