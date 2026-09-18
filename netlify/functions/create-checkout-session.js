@@ -128,7 +128,18 @@ exports.handler = async function (event) {
       shipping_address_collection: { allowed_countries: ['GB'] },
       shipping_options,
       success_url: origin + '/basket/thank-you/',
-      cancel_url: origin + '/basket/'
+      cancel_url: origin + '/basket/',
+      // This Stripe account (Darklight Design Ltd) is also used for Darklight's
+      // own Payment Links, so account-wide branding stays Darklight's -- rather
+      // than fight that, this custom_text is attached only to sessions created
+      // by this function (i.e. only Living Field checkouts), explaining the
+      // Darklight name the customer is about to see on this page. It does not
+      // affect Darklight's other Payment Links, which don't go through here.
+      custom_text: {
+        submit: {
+          message: 'Darklight Design Ltd is the company behind The Living Field -- that\'s the name that will appear on your card or bank statement.'
+        }
+      }
     });
 
     return {
