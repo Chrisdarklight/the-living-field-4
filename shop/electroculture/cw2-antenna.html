@@ -80,14 +80,18 @@
         <p class="pd-lede">Crafted with versatility in mind, the CW2+ offers variable mounting heights and is a powerful option both above and below 15ft — where the CW1+ needs open sky and height to work with, the CW2+ adapts to the plot you've got.</p>
 
         <!--
-          STRIPE CHECKOUT — replace the href below with your Stripe Payment Link
-          for this product. Create one in the Stripe Dashboard under
-          Payment links → New, set the price to £385.00, then paste the
-          generated URL here. No backend or API key needed for this approach.
-          Price shown here is RRP — VAT and shipping are calculated at basket,
-          not on the product page.
+          Real Stripe Checkout via the site basket (see assets/js/cart.js and
+          netlify/functions/create-checkout-session.js) — data-price-id is
+          this product's real Stripe Price ID (not the Product ID). VAT (20%
+          UK) is added automatically at checkout, not shown here.
         -->
-        <a href="mailto:hello@thelivingfield.co.uk?subject=Order%20enquiry%20%E2%80%94%20CW2%2B%20Antenna%20%28%C2%A3385.00%29&body=Hi%2C%20I%27d%20like%20to%20order%20the%20CW2%2B%20Antenna%20%28%C2%A3385.00%29.%20Please%20let%20me%20know%20how%20to%20proceed%20with%20payment." class="btn btn-solid" style="margin:1.2em 0;">Email to order →</a>
+        <button type="button" class="btn btn-solid" style="margin:1.2em 0;"
+          data-add-to-cart
+          data-price-id="price_1UH5SHKv2SRkvpcuVxtTbf1r"
+          data-name="CW2+ Paramagnetic Electroculture Variable Height Antenna"
+          data-price="£385.00"
+          data-image="../../assets/img/cw-antenna-studio-full.webp"><span data-add-label>Add to basket — £385.00</span></button>
+        <p style="margin:0.6em 0 0;"><a href="mailto:hello@thelivingfield.co.uk?subject=Order%20enquiry%20%E2%80%94%20CW2%2B%20Antenna%20%28%C2%A3385.00%29&body=Hi%2C%20I%27d%20like%20to%20order%20the%20CW2%2B%20Antenna%20%28%C2%A3385.00%29.%20Please%20let%20me%20know%20how%20to%20proceed%20with%20payment." style="font-size:0.85rem;">Prefer to order by email instead? →</a></p>
 
         <details class="pd-more">
           <summary><span class="pd-more-label-closed">Read more</span><span class="pd-more-label-open">Show less</span> <span class="pd-more-arrow" aria-hidden="true">→</span></summary>
