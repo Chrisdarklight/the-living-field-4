@@ -1,0 +1,9 @@
+{
+  "name": "thelivingfield",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The Living Field -- static site with a Netlify Function (Stripe Checkout basket). This package.json exists solely so Netlify installs the dependencies its Function needs (see netlify/functions/create-checkout-session.js) -- the site itself is static HTML/CSS/JS with no build step.",
+  "dependencies": {
+    "stripe": "^16.0.0"
+  }
+}
