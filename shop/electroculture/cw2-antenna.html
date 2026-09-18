@@ -84,10 +84,18 @@
           netlify/functions/create-checkout-session.js) — data-price-id is
           this product's real Stripe Price ID (not the Product ID). VAT (20%
           UK) is added automatically at checkout, not shown here.
+
+          *** TEMPORARY TEST-MODE PRICE ID — swap back before real customers order! ***
+          Live Price ID (normal state): price_1UH5SHKv2SRkvpcuVxtTbf1r
+          Currently set to a Stripe *test-mode* Price ID so CJ can run a real
+          checkout test with Netlify's STRIPE_SECRET_KEY also temporarily set
+          to a test (sk_test_...) key. Once the test is done, this must be
+          swapped back to the live Price ID above, and the Netlify key swapped
+          back to the live secret key, before anyone can order for real.
         -->
         <button type="button" class="btn btn-solid" style="margin:1.2em 0;"
           data-add-to-cart
-          data-price-id="price_1UH5SHKv2SRkvpcuVxtTbf1r"
+          data-price-id="price_1UH5cMKv2SRkvpcuGFA8N27U"
           data-name="CW2+ Paramagnetic Electroculture Variable Height Antenna"
           data-price="£385.00"
           data-image="../../assets/img/cw-antenna-studio-full.webp"><span data-add-label>Add to basket — £385.00</span></button>

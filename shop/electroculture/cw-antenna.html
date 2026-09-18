@@ -83,10 +83,18 @@
           STRIPE CHECKOUT (basket): wired to a real Stripe Price ID below via
           data-price-id, added to the browser basket by assets/js/cart.js.
           VAT (20% UK) is added automatically at checkout, not shown here.
+
+          *** TEMPORARY TEST-MODE PRICE ID — swap back before real customers order! ***
+          Live Price ID (normal state): price_1UGL9EKv2SRkvpcuT4OYAeF6
+          Currently set to a Stripe *test-mode* Price ID so CJ can run a real
+          checkout test with Netlify's STRIPE_SECRET_KEY also temporarily set
+          to a test (sk_test_...) key. Once the test is done, this must be
+          swapped back to the live Price ID above, and the Netlify key swapped
+          back to the live secret key, before anyone can order for real.
         -->
         <button type="button" class="btn btn-solid" style="margin:1.2em 0;"
           data-add-to-cart
-          data-price-id="price_1UGL9EKv2SRkvpcuT4OYAeF6"
+          data-price-id="price_1UH5c3Kv2SRkvpcuGlrFmIQ1"
           data-name="CW1+ Paramagnetic Electroculture Aerial Antenna"
           data-price="£385.00"
           data-image="../../assets/img/cw1-antenna-demo.jpg"><span data-add-label>Add to basket — £385.00</span></button>
