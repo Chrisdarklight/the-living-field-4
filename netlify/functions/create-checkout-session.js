@@ -27,7 +27,15 @@
 // always pay the listed price plus VAT, matching how prices are shown
 // site-wide. If this ever needs to change (a different rate, or per-product
 // rates), update it here -- it's the one place tax is applied.
-const UK_VAT_TAX_RATE_ID = 'txr_1UGLAtKv2SRkvpcudHprgVYw';
+//
+// *** TEMPORARY TEST-MODE TAX RATE ID -- swap back before real customers order! ***
+// Live Tax Rate ID (normal state): txr_1UGLAtKv2SRkvpcudHprgVYw
+// Currently set to a Stripe *test-mode* Tax Rate (live and test Tax Rates
+// are separate objects, just like Price IDs) so CJ can run a real checkout
+// test with Netlify's STRIPE_SECRET_KEY also temporarily set to a test
+// (sk_test_...) key. Swap this back to the live ID above at the same time
+// the two product buttons' Price IDs and the Netlify key get swapped back.
+const UK_VAT_TAX_RATE_ID = 'txr_1UH6GbKv2SRkvpcu3ykL7tPD';
 
 // Shipping: free once the order subtotal (goods only, before VAT) reaches
 // £100, otherwise a flat £7.50 -- both amounts in pence, per CJ. The
