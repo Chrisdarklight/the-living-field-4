@@ -28,7 +28,14 @@
   "@type": "Product",
   "name": "Dragon's Blood Capsules",
   "description": "Resin from Daemonorops draco, traditionally valued for skin, gum and blood health. From our partner brand, Cultivate Elevate.",
-  "brand": { "@type": "Brand", "name": "Cultivate Elevate" }
+  "brand": { "@type": "Brand", "name": "Cultivate Elevate" },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "GBP",
+    "price": "29.00",
+    "availability": "https://schema.org/InStock",
+    "url": "https://www.thelivingfield.co.uk/alchemical-formulations/protocols/dragons-blood-capsules.html"
+  }
 }
 </script>
 </head>
@@ -70,10 +77,24 @@
       <div>
         <span class="tag">Skin, Gums &amp; Detox</span>
         <h1 style="margin-bottom:0.2em;">Dragon's Blood Capsules</h1>
+        <p class="price">£29.00</p>
         <p>Dragon's Blood is the deep red resin of <em>Daemonorops draco</em>, a climbing rattan palm — traded for centuries across South East Asia, the Canary Islands and along old caravan routes into the Mediterranean. Long before anyone called it a superfood, it was valued as a wound dressing, a dye and a ceremonial substance.</p>
         <p>This protocol explores the history and traditional use of Dragon's Blood — paired with a simple daily practice guide and a downloadable PDF study guide.</p>
 
-        <a href="mailto:hello@thelivingfield.co.uk?subject=Order%20enquiry%20%E2%80%94%20Dragon%27s%20Blood%20Capsules&amp;body=Hi%2C%20I%27d%20like%20to%20order%20the%20Dragon%27s%20Blood%20Capsules.%20Please%20let%20me%20know%20how%20to%20proceed%20with%20payment." class="btn btn-solid" style="margin:1.2em 0;">Email to order →</a>
+        <!--
+          STRIPE CHECKOUT (basket): wired to a real Stripe Price ID below via
+          data-price-id, added to the browser basket by assets/js/cart.js.
+          VAT (20% UK) is added automatically at checkout, not shown here.
+
+          LIVE Price ID (2026-09-28).
+        -->
+        <button type="button" class="btn btn-solid" style="margin:1.2em 0;"
+          data-add-to-cart
+          data-price-id="price_1UKfF0Kv2SRkvpcuX8MiJwbW"
+          data-name="Dragon's Blood Capsules"
+          data-price="£29.00"
+          data-image="../../assets/img/dragons-blood-capsules-pack.webp"><span data-add-label>Add to basket — £29.00</span></button>
+        <p style="margin:0.6em 0 0;"><a href="mailto:hello@thelivingfield.co.uk?subject=Order%20enquiry%20%E2%80%94%20Dragon%27s%20Blood%20Capsules%20%28%C2%A329.00%29&amp;body=Hi%2C%20I%27d%20like%20to%20order%20the%20Dragon%27s%20Blood%20Capsules%20%28%C2%A329.00%29.%20Please%20let%20me%20know%20how%20to%20proceed%20with%20payment." style="font-size:0.85rem;">Prefer to order by email instead? →</a></p>
 
         <div class="card" style="margin-bottom:1.6em;">
           <p style="margin:0 0 0.6em; font-weight:500;">Included with this protocol:</p>
@@ -85,7 +106,7 @@
           <tr><td>Format</td><td>120 vegan capsules, 500mg per capsule</td></tr>
           <tr><td>Source</td><td>Daemonorops draco resin</td></tr>
           <tr><td>Tradition</td><td>South East Asian &amp; old Mediterranean trade routes</td></tr>
-          <tr><td>Status</td><td>In stock — email to order while online checkout is being set up</td></tr>
+          <tr><td>Status</td><td>In stock</td></tr>
         </table>
       </div>
     </div>
@@ -179,7 +200,7 @@
     <h2>What we don't claim</h2>
     <p>This page describes historical and traditional use, not a medical claim — Dragon's Blood is a dietary supplement, not a licensed medicine, and we won't present it as one. This content is not intended to be a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition, and speak with a doctor before adding anything like this to your routine if you're pregnant, nursing, taking medication, or managing a health condition.</p>
     <p>This product is a food supplement and is not intended to diagnose, treat, cure or prevent any disease. It should not be used as a substitute for a varied and balanced diet and a healthy lifestyle. Do not exceed the recommended intake, and keep out of reach of children.</p>
-    <p style="color:var(--charcoal-alt); font-size:0.95rem;">Interested in this one specifically, or want to know when it's available to order? <a href="../../contact/">Get in touch</a> and we'll let you know.</p>
+    <p style="color:var(--charcoal-alt); font-size:0.95rem;">Have a question about this protocol before ordering? <a href="../../contact/">Get in touch</a> and we'll help.</p>
   </div>
 </section>
 
