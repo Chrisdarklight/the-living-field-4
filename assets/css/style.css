@@ -716,6 +716,20 @@ section { padding: 90px 0; }
 }
 .pd-image-zoom-icon svg { width: 18px; height: 18px; }
 
+/* Uniform product-page tile system — keeps every image/diagram/video box on
+   a product page the same size as each other, so galleries never look like
+   a mismatched pile of thumbnails.
+   .pd-tile-row: an evenly-spaced row that fills the full container width
+   when there are 3 items (e.g. "A closer look" photo gallery), and centers
+   smaller, identically-sized tiles when there are fewer.
+   .pd-feature-tile: a single large box matching the width of the main
+   product hero image (.pd-layout--wide-image's image column at the site's
+   1180px container), used for a standalone diagram or video that should
+   read as "as important as the product photo" rather than a small thumb. */
+.pd-tile-row { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
+.pd-tile-row > * { flex: 0 1 calc((100% - 64px) / 3); min-width: 240px; }
+.pd-feature-tile { max-width: 655px; margin: 0 auto; }
+
 .lightbox-overlay {
   position: fixed;
   inset: 0;
