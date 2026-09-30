@@ -1,17 +1,17 @@
 [build]
   functions = "netlify/functions"
 
-# Explicitly use Netlify's esbuild-based function bundler so that
-# netlify/functions/package.json's "stripe" dependency actually gets
-# installed and bundled with the function at deploy time. Without this,
-# some accounts/projects silently skip installing a function-local
-# package.json's dependencies -- the function still "deploys" (Netlify
-# reports it as present), but at runtime require('stripe') fails because
-# the module was never installed, which crashes the function before it can
-# return its own error message. This is the leading suspect for CJ's
-# real-world "Checkout could not be started" test failure on 2026-09-18:
-# every recent deploy finished in 8-13 seconds, far too fast for an actual
-# npm install of the stripe package to have happened.
+# Explicitly use Netlify's esbuild-based function bundler so that the
+# root package.json's "stripe" dependency actually gets installed and
+# bundled with the checkout function at deploy time. (There is no separate
+# netlify/functions/package.json -- the function shares the root
+# package.json, and esbuild bundling is what picks that dependency up.)
+# Without this, some accounts/projects silently skip installing
+# dependencies for a function -- it still "deploys" (Netlify reports it as
+# present), but at runtime require('stripe') fails because the module was
+# never installed, which crashes the function before it can return its own
+# error message. This was the leading suspect for CJ's real-world "Checkout
+# could not be started" test failure on 2026-09-18.
 [functions]
   node_bundler = "esbuild"
 
