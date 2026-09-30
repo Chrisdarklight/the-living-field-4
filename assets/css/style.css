@@ -776,6 +776,25 @@ section { padding: 90px 0; }
   .pd-collage-2 .tile { height: auto; aspect-ratio: 4/3; }
 }
 
+/* Flush single-row collage variant for galleries of three or more photos
+   where no single shot is a clear "hero" worth doubling in height — every
+   tile gets equal width in one row, edge-to-edge, same rounded-outer-
+   corners-only treatment as .pd-collage and .pd-collage-2. Use .pd-collage
+   instead when one photo (a context/establishing shot) earns the bigger,
+   two-row treatment. */
+.pd-collage-row {
+  display: flex;
+  gap: 0;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.pd-collage-row .tile { flex: 1 1 0; min-width: 0; aspect-ratio: 1/1; border-radius: 0; }
+@media (max-width: 700px) {
+  .pd-collage-row { flex-direction: column; }
+  .pd-collage-row .tile { aspect-ratio: 4/3; }
+}
+
 .lightbox-overlay {
   position: fixed;
   inset: 0;
