@@ -758,41 +758,27 @@ section { padding: 90px 0; }
   .pd-collage .pd-collage-big { grid-row: auto; height: auto; aspect-ratio: 1/1; }
 }
 
-/* Two-photo variant for product pages whose "A closer look" gallery only
-   has two shots: a large photo beside one smaller photo, sharing a fixed
-   row height (background-size:cover crops each to fit) rather than the
-   3-photo big-plus-stacked-small layout above. */
-.pd-collage-2 {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 0;
-  margin: 0 auto;
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.pd-collage-2 .tile { border-radius: 0; height: 440px; aspect-ratio: auto; }
-@media (max-width: 700px) {
-  .pd-collage-2 { grid-template-columns: 1fr; }
-  .pd-collage-2 .tile { height: auto; aspect-ratio: 4/3; }
-}
-
-/* Flush single-row collage variant for galleries of three or more photos
-   where no single shot is a clear "hero" worth doubling in height — every
-   tile gets equal width in one row, edge-to-edge, same rounded-outer-
-   corners-only treatment as .pd-collage and .pd-collage-2. Use .pd-collage
-   instead when one photo (a context/establishing shot) earns the bigger,
-   two-row treatment. */
+/* Flush collage variant for galleries of two or more photos where no
+   single shot is a clear "hero" worth doubling in height — tiles are
+   equal squares, flush edge-to-edge, same rounded-outer-corners-only
+   treatment as .pd-collage. Use .pd-collage instead when one photo (a
+   context/establishing shot) earns the bigger, asymmetric treatment.
+   Each tile holds 50% width, so two photos fill one row at CW1-sized
+   squares, and four wrap into two flush rows of two rather than
+   cramming four-across into one row and shrinking every tile — that's
+   what made the first pass at this look too small. */
 .pd-collage-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   margin: 0 auto;
   border-radius: var(--radius);
   overflow: hidden;
 }
-.pd-collage-row .tile { flex: 1 1 0; min-width: 0; aspect-ratio: 1/1; border-radius: 0; }
+.pd-collage-row .tile { flex: 1 1 50%; min-width: 0; aspect-ratio: 1/1; border-radius: 0; }
 @media (max-width: 700px) {
   .pd-collage-row { flex-direction: column; }
-  .pd-collage-row .tile { aspect-ratio: 4/3; }
+  .pd-collage-row .tile { flex-basis: auto; aspect-ratio: 4/3; }
 }
 
 .lightbox-overlay {
